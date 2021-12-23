@@ -1,0 +1,12 @@
+[
+  {
+    "repoName": "test-repo-name",
+    "ownerLogin": "test-user",
+    "branchDetails": [
+      {
+        "branchName": "master",
+        "lastCommitSha": "123456"
+      }
+    ]
+  }
+]
