@@ -2,3 +2,7 @@ https:
   repo: https://api.github.com/users/%s/repos
   branches: https://api.github.com/repos/%s/%s/branches
 
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher

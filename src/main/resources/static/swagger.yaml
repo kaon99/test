@@ -1,0 +1,72 @@
+swagger: "2.0"
+info:
+  description: "GitHub repository test task"
+  version: "1.0.0"
+  title: "Swagger GitHub"
+host: "localhost:8080"
+basePath: "/"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /repositories/{name}:
+    get:
+      tags:
+        - "Repository"
+      summary: "Find Repository by ID"
+      description: "Returns a single Repository"
+      operationId: "getRepositoryById"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "name"
+          in: "path"
+          description: "GitHub user name"
+          required: true
+          type: "string"
+
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/Repository"
+        "404":
+          description: "Return when user in nos present on GitHub"
+          schema:
+            $ref: "#/definitions/Error"
+        "406":
+          description: "Return when you given another application/json Accept"
+          schema:
+            $ref: "#/definitions/Error"
+
+definitions:
+  Repository:
+    type: array
+    items:
+      type: object
+      properties:
+        repoName:
+          type: string
+        ownerLogin:
+          type: string
+        branchDetails:
+          type: array
+          items:
+            type: object
+            properties:
+              branchName:
+                type: string
+              lastCommitSha:
+                type: string
+  Error:
+    type: object
+    properties:
+      status:
+        type: string
+      Message:
+        type: string
+
+
+
+
+
