@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.model.BranchDetails;
 import com.model.GitHubRepositoryDetails;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.client.RestTemplate;
@@ -16,15 +15,18 @@ import static com.Constant.*;
 
 
 @Controller
-@RequiredArgsConstructor
+
 public class GitHubService {
 
     final private RestTemplate restTemplate;
-
-    @Value("${https.repo}")
     private String httpRepo;
-    @Value("${https.branches}")
     private String httpBranches;
+
+    public GitHubService(RestTemplate restTemplate, @Value("${https.repo}") String httpRepo, @Value("${https.branches}") String httpBranches) {
+        this.restTemplate = restTemplate;
+        this.httpRepo = httpRepo;
+        this.httpBranches = httpBranches;
+    }
 
 
     public List<GitHubRepositoryDetails> gitHubRepositories(String userName) {

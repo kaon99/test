@@ -1,4 +1,4 @@
-package com.example.test;
+package com.controller;
 
 import com.model.BranchDetails;
 import com.model.GitHubRepositoryDetails;

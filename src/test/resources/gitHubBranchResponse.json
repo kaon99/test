@@ -1,0 +1,10 @@
+[
+  {
+    "name": "main",
+    "commit": {
+      "sha": "12345",
+      "url": "https://api.github.com/repos/test-user/test1/commits/3b75ad5a9235310097547d4ca076b96c701699bc"
+    },
+    "protected": false
+  }
+]
