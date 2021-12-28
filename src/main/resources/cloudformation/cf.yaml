@@ -63,11 +63,11 @@ Resources:
   Cluster:
     Type: AWS::ECS::Cluster
     Properties:
-      ClusterName: deployment-example-cluster
+      ClusterName: test-cluster
   ExecutionRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: deployment-example-role
+      RoleName: test-role
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
@@ -96,7 +96,7 @@ Resources:
       NetworkMode: awsvpc
       ExecutionRoleArn: !Ref ExecutionRole
       ContainerDefinitions:
-        - Name: deployment-example-container
+        - Name: test-container
           Image: kaon99/testtui
           PortMappings:
             - ContainerPort: 8080
@@ -120,7 +120,7 @@ Resources:
           SecurityGroups:
             - !GetAtt ContainerSecurityGroup.GroupId
       LoadBalancers:
-        - ContainerName: deployment-example-container
+        - ContainerName: test-container
           ContainerPort: 8080
           TargetGroupArn: !Ref TargetGroup
 
@@ -158,7 +158,7 @@ Resources:
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
-      Name: deployment-example-cluster-tg
+      Name: test-cluster-tg
       VpcId: !Ref VPC
       Port: 8080
       Protocol: HTTP
