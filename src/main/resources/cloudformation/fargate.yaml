@@ -1,6 +1,7 @@
 AWSTemplateFormatVersion: "2010-09-09"
 
 Resources:
+  #  VPC
   VPC:
     Type: AWS::EC2::VPC
     Properties:
@@ -58,7 +59,7 @@ Resources:
       GatewayId: !Ref InternetGateway
       RouteTableId: !Ref RouteTable
       DestinationCidrBlock: '0.0.0.0/0'
-#  ECS Fargate
+  #  ECS Fargate
   Cluster:
     Type: AWS::ECS::Cluster
     Properties:
@@ -103,8 +104,9 @@ Resources:
         - FARGATE
   Service:
     Type: AWS::ECS::Service
+    DependsOn: ListenerRule
     Properties:
-      ServiceName: deployment-exmaple-service
+      ServiceName: test-ecs-service
       Cluster: !Ref Cluster
       TaskDefinition: !Ref TaskDefinition
       DesiredCount: 1
@@ -117,3 +119,59 @@ Resources:
             - !Ref Subnet2
           SecurityGroups:
             - !GetAtt ContainerSecurityGroup.GroupId
+      LoadBalancers:
+        - ContainerName: deployment-example-container
+          ContainerPort: 8080
+          TargetGroupArn: !Ref TargetGroup
+
+  # Load balancer
+  LoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: ecs-services
+      Subnets:
+        - !Ref Subnet1
+        - !Ref Subnet2
+      SecurityGroups:
+        - !Ref ContainerSecurityGroup
+  LoadBalancerListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref LoadBalancer
+      Protocol: HTTP
+      Port: 8080
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref DefaultTargetGroup
+  ListenerRule:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      ListenerArn: !Ref LoadBalancerListener
+      Priority: 2
+      Conditions:
+        - Field: path-pattern
+          Values:
+            - /*
+      Actions:
+        - TargetGroupArn: !Ref TargetGroup
+          Type: forward
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: deployment-example-cluster-tg
+      VpcId: !Ref VPC
+      Port: 8080
+      Protocol: HTTP
+      Matcher:
+        HttpCode: 200-299
+      TargetType: ip
+
+  DefaultTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: default
+      VpcId: !Ref VPC
+      Protocol: 'HTTP'
+      Port: 8080
+
+
