@@ -1,5 +1,6 @@
 package com.service;
 
+import com.constants.Constants;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.mapper.GitHubMapper;
 import com.model.BranchDetails;
@@ -14,6 +15,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.constants.Constants.*;
 
 
 @Controller
@@ -39,7 +42,7 @@ public class GitHubService {
         List<GitHubRepositoryDetails> repositories = repositoryMapper
                 .mapToGitHubRepositoryDetailsList(restTemplate.getForObject(String.format(httpRepo, userName),
                         ArrayNode.class));
-        return repositories.stream()
+        return repositories.parallelStream()
                 .filter(repo -> !repo.getFork())
                 .peek(repo -> repo.setBranchDetails(getBranchDetails(repo.getOwnerLogin(), repo.getRepoName(), page)))
                 .collect(Collectors.toList());
@@ -47,8 +50,8 @@ public class GitHubService {
 
     private List<BranchDetails> getBranchDetails(String userName, String repoName, int page) {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("per_page", "100");
-        headers.add("page", String.valueOf(page));
+        headers.add(PER_PAGE, ONE_HUNDRED);
+        headers.add(PAGE, String.valueOf(page));
         HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
         ResponseEntity<ArrayNode> exchange = restTemplate.exchange(String.format(httpBranches, userName, repoName),

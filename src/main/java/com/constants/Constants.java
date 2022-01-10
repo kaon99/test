@@ -8,4 +8,7 @@ public class Constants {
     public static final String FORK = "fork";
     public static final String OWNER = "owner";
     public static final String LOGIN = "login";
+    public static final String PER_PAGE = "per_page";
+    public static final String PAGE = "page";
+    public static final String ONE_HUNDRED = "100";
 }
