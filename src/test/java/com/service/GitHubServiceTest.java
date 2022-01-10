@@ -3,6 +3,7 @@ package com.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.mapper.GitHubMapper;
 import com.model.GitHubRepositoryDetails;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,21 +28,22 @@ class GitHubServiceTest {
     public static final String BRANCH_RESPONSE = "src/test/resources/gitHubBranchResponse.json";
     @Mock
     private RestTemplate restTemplate;
-    private final String httpRepo = "repo/";
-    private final String httpBranches = "branch/";
+    private final GitHubMapper repositoryMapper = new GitHubMapper();
+    private final String httpRepo = "repo/test-user";
+    private final String httpBranches = "branch/test-user/test1";
     @InjectMocks
     private GitHubService gitHubService;
 
     @BeforeEach
     void setUp() {
-        gitHubService = new GitHubService(restTemplate, httpRepo, httpBranches);
+        gitHubService = new GitHubService(restTemplate,repositoryMapper, httpRepo, httpBranches);
     }
 
     @Test
     void shouldReturnOneRepository() throws IOException {
-        Mockito.when(restTemplate.getForObject(String.format(httpRepo, "test-user"), ArrayNode.class))
+        Mockito.when(restTemplate.getForObject((httpRepo), ArrayNode.class))
                 .thenReturn(getArrayNode(REPOSITORY_RESPONSE));
-        Mockito.when(restTemplate.getForObject(String.format(httpBranches, "test-user", "test1"), ArrayNode.class))
+        Mockito.when(restTemplate.getForObject((httpBranches), ArrayNode.class))
                 .thenReturn(getArrayNode(BRANCH_RESPONSE));
 
         List<GitHubRepositoryDetails> result = gitHubService.gitHubRepositories("test-user");
