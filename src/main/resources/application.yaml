@@ -6,3 +6,6 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant-path-matcher
+springdoc:
+  swagger-ui:
+    disable-swagger-default-url: true

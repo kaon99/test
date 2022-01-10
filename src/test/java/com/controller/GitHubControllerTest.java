@@ -30,12 +30,11 @@ public class GitHubControllerTest {
     @MockBean
     private GitHubService gitHubService;
 
-
     @Test
     void shouldReturnOneRepository() throws Exception {
         List<GitHubRepositoryDetails> list = getGitHubRepositoryList();
 
-        Mockito.when(gitHubService.gitHubRepositories("test-user")).thenReturn(list);
+        Mockito.when(gitHubService.gitHubRepositories("test-user","1")).thenReturn(list);
         String expectedResult = new String(Files.readAllBytes(Paths.get("src/test/resources/oneRepository.json")));
         mvc.perform(get("/users/test-user/repositories")
                         .accept(MediaType.APPLICATION_JSON))
@@ -45,7 +44,7 @@ public class GitHubControllerTest {
 
     @Test
     void shouldFailedWithNonExistUser() throws Exception {
-        Mockito.when(gitHubService.gitHubRepositories("non-exist-user"))
+        Mockito.when(gitHubService.gitHubRepositories("non-exist-user","1"))
                 .thenThrow(HttpClientErrorException.NotFound.class);
         String expectedResult = new String(Files.readAllBytes(Paths.get("src/test/resources/notFound.json")));
 

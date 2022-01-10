@@ -31,7 +31,7 @@ paths:
           schema:
             $ref: "#/definitions/Repository"
         "404":
-          description: "Return when user in nos present on GitHub"
+          description: "Return when resource in nos present on GitHub"
           schema:
             $ref: "#/definitions/Error"
         "406":
