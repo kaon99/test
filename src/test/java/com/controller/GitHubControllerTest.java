@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TestController {
+public class GitHubControllerTest {
     @Autowired
     private MockMvc mvc;
     @MockBean
@@ -37,7 +37,7 @@ public class TestController {
 
         Mockito.when(gitHubService.gitHubRepositories("test-user")).thenReturn(list);
         String expectedResult = new String(Files.readAllBytes(Paths.get("src/test/resources/oneRepository.json")));
-        mvc.perform(get("/repositories/test-user")
+        mvc.perform(get("/users/test-user/repositories")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedResult));
@@ -49,7 +49,7 @@ public class TestController {
                 .thenThrow(HttpClientErrorException.NotFound.class);
         String expectedResult = new String(Files.readAllBytes(Paths.get("src/test/resources/notFound.json")));
 
-        mvc.perform(get("/repositories/non-exist-user")
+        mvc.perform(get("/users/non-exist-user/repositories")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(content().json(expectedResult));
@@ -58,7 +58,7 @@ public class TestController {
     @Test
     void shouldFailedWithNotAcceptable() throws Exception {
         String expectedResult = new String(Files.readAllBytes(Paths.get("src/test/resources/notAcceptable.json")));
-        mvc.perform(get("/repositories/test-user")
+        mvc.perform(get("/users/test-user/repositories")
                         .accept(MediaType.APPLICATION_XML))
                 .andExpect(status().isNotAcceptable()).andExpect(content().json(expectedResult));
 

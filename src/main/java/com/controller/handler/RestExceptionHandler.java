@@ -24,8 +24,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     private ObjectMapper objectMapper;
 
     @ExceptionHandler(HttpClientErrorException.NotFound.class)
-    protected ResponseEntity<Object> handleEntityNotFound(HttpClientErrorException.NotFound ex) {
-        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, "This user was not found on GitHub.");
+    protected ResponseEntity<Object> handleEntityNotFound() {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, "This resource was not found on GitHub.");
         return buildResponseEntity(apiError);
     }
 

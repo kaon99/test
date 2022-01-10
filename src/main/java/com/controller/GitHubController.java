@@ -15,7 +15,7 @@ import java.util.List;
 public class GitHubController {
     private GitHubService gitHubService;
 
-    @GetMapping(value = "/repositories/{name}")
+    @GetMapping(value = "/users/{name}/repositories")
     public List<GitHubRepositoryDetails> getGitHubRepositoryList(@PathVariable @NonNull String name) {
         return gitHubService.gitHubRepositories(name);
     }
