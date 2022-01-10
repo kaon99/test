@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.Constant.*;
+import static com.constants.Constants.*;
 
 
 @Controller

@@ -1,6 +1,7 @@
 package com.controller.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
@@ -17,8 +18,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
+@AllArgsConstructor
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
-    @Autowired
+
     private ObjectMapper objectMapper;
 
     @ExceptionHandler(HttpClientErrorException.NotFound.class)
