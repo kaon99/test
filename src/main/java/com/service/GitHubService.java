@@ -35,7 +35,7 @@ public class GitHubService {
     }
 
 
-    public List<GitHubRepositoryDetails> gitHubRepositories(String userName, String page) {
+    public List<GitHubRepositoryDetails> gitHubRepositories(String userName, int page) {
         List<GitHubRepositoryDetails> repositories = repositoryMapper
                 .mapToGitHubRepositoryDetailsList(restTemplate.getForObject(String.format(httpRepo, userName),
                         ArrayNode.class));
@@ -45,10 +45,10 @@ public class GitHubService {
                 .collect(Collectors.toList());
     }
 
-    private List<BranchDetails> getBranchDetails(String userName, String repoName, String page) {
+    private List<BranchDetails> getBranchDetails(String userName, String repoName, int page) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("per_page", "100");
-        headers.add("page", page);
+        headers.add("page", String.valueOf(page));
         HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
         ResponseEntity<ArrayNode> exchange = restTemplate.exchange(String.format(httpBranches, userName, repoName),

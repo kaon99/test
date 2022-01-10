@@ -17,7 +17,8 @@ public class GitHubController {
     private GitHubService gitHubService;
 
     @GetMapping(value = "/users/{name}/repositories")
-    public List<GitHubRepositoryDetails> getGitHubRepositoryList(@RequestHeader("page") String page,
+    public List<GitHubRepositoryDetails> getGitHubRepositoryList(@RequestHeader(value = "page",defaultValue = "1")
+                                                                 Integer page,
                                                                  @PathVariable @NonNull String name) {
         return gitHubService.gitHubRepositories(name, page);
     }

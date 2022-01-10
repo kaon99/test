@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.InMemorySwaggerResourcesProvider;
 import springfox.documentation.swagger.web.SwaggerResource;
@@ -11,6 +12,7 @@ import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -25,6 +27,7 @@ public class SwaggerConfig {
     public Docket postsApi() {
         return new Docket(SWAGGER_2)
                 .select()
+                .apis(RequestHandlerSelectors.none())
                 .paths(PathSelectors.regex("(?!/error.*).*"))
                 .build();
     }
@@ -37,10 +40,7 @@ public class SwaggerConfig {
             wsResource.setName("GitHub");
             wsResource.setSwaggerVersion("2.0");
             wsResource.setLocation("/swagger.yaml");
-
-            List<SwaggerResource> resources = new ArrayList<>(defaultResourcesProvider.get());
-            resources.add(wsResource);
-            return resources;
+            return Collections.singletonList(wsResource);
         };
     }
 }

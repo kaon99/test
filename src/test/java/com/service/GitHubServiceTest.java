@@ -46,7 +46,7 @@ class GitHubServiceTest {
         Mockito.when(restTemplate.getForObject((httpBranches), ArrayNode.class))
                 .thenReturn(getArrayNode(BRANCH_RESPONSE));
 
-        List<GitHubRepositoryDetails> result = gitHubService.gitHubRepositories("test-user","1");
+        List<GitHubRepositoryDetails> result = gitHubService.gitHubRepositories("test-user",1);
         assertThat(result.size()).isEqualTo(1);
         assertThat(result.get(0).getRepoName()).isEqualTo("test1");
         assertThat(result.get(0).getOwnerLogin()).isEqualTo("test-user");
