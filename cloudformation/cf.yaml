@@ -1,5 +1,9 @@
 AWSTemplateFormatVersion: "2010-09-09"
-
+Parameters:
+  ContainerSecurityGroupName:
+    Type: String
+    Default: ContainerSecurityGroupTest
+    Description: Security group name for Test container
 Resources:
   #  VPC
   VPC:
