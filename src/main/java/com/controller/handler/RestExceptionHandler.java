@@ -32,10 +32,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleHttpMediaTypeNotAcceptable(HttpMediaTypeNotAcceptableException ex,
                                                                    HttpHeaders headers,
                                                                    HttpStatus status, WebRequest request) {
-
-        ApiError apiError = new ApiError(status, ex.getMessage());
-        return buildResponseEntity(apiError);
-
+        return buildResponseEntity(new ApiError(status, ex.getMessage()));
     }
 
     @SneakyThrows

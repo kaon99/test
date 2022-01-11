@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @Data
 public class ApiError {
+
     private HttpStatus status;
     @JsonProperty("Message")
     private String message;

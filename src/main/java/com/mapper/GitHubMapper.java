@@ -14,7 +14,6 @@ import static com.constants.Constants.*;
 @Component
 public class GitHubMapper {
 
-
     public List<GitHubRepositoryDetails> mapToGitHubRepositoryDetailsList(ArrayNode arrayNode) {
         List<GitHubRepositoryDetails> result = new ArrayList<>();
         if (arrayNode != null) {

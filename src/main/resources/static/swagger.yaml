@@ -14,8 +14,7 @@ paths:
       tags:
         - "Repository"
       summary: "Find Repository by ID"
-      description: "Returns a single Repository"
-      operationId: "getRepositoryById"
+      description: "Returns a list of repositories for the specified username"
       produces:
         - "application/json"
       parameters:
@@ -24,7 +23,6 @@ paths:
           description: "GitHub user name"
           required: true
           type: "string"
-
         - name: page
           in: header
           description: Page for pagination
