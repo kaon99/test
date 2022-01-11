@@ -1,6 +1,5 @@
 package com.service;
 
-import com.constants.Constants;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.mapper.GitHubMapper;
 import com.model.BranchDetails;

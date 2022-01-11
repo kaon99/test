@@ -11,10 +11,7 @@ import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-
 
 import static springfox.documentation.spi.DocumentationType.SWAGGER_2;
 
